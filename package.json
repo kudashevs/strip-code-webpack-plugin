@@ -1,0 +1,60 @@
+{
+  "name": "strip-code-webpack-plugin",
+  "version": "1.0.0",
+  "description": "A webpack plugin that strips marked blocks from any code processed by webpack.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kudashevs/strip-code-webpack-plugin.git"
+  },
+  "homepage": "https://github.com/kudashevs/strip-code-webpack-plugin",
+  "bugs": "https://github.com/kudashevs/strip-code-webpack-plugin/issues",
+  "keywords": [
+    "webpack",
+    "strip code",
+    "strip blocks",
+    "strip code blocks",
+    "remove code",
+    "remove blocks",
+    "remove code blocks",
+    "webpack strip code",
+    "webpack remove blocks"
+  ],
+  "authors": [
+    {
+      "name": "Sergey Kudashev",
+      "email": "kudashevs@gmail.com"
+    }
+  ],
+  "peerDependencies": {
+    "webpack": ">=5.0.0"
+  },
+  "dependencies": {
+    "strip-code": "^1.0.0",
+    "webpack-sources": "^1.4.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0",
+    "memfs": "^3.4.1",
+    "prettier": "^2.5.1",
+    "raw-loader": "^4.0.2",
+    "tmp": "^0.2.3",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.6",
+    "webpack": "^5.92.0"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:unit": "npm run test ./test/unit/",
+    "test:spec": "npm run test ./test/acceptance/",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint --cache .",
+    "format": "prettier --write \"**/*.+(js|json)\" --",
+    "check": "tsc"
+  }
+}
