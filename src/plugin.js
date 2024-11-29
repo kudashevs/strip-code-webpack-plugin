@@ -2,7 +2,7 @@
 'use strict';
 
 import StripCode from 'strip-code';
-import {isEmptyArray, isNotSet} from './utils';
+import {isEmptyArray, isNotSet} from './utils.js';
 
 const EXCLUDE_MODES = ['development'];
 const DEFAULT_NAME = 'dev';
