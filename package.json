@@ -1,6 +1,6 @@
 {
   "name": "strip-code-webpack-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A webpack plugin that strips marked blocks from any code processed by webpack.",
   "license": "MIT",
   "type": "module",
