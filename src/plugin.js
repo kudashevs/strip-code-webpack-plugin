@@ -15,6 +15,11 @@ export default class StripCodeWebpackPlugin {
     this.options = options;
   }
 
+  /**
+   * @param {Object.<string, any>} compiler
+   *
+   * @throws {Error} It throws an Error when options do not match the schema.
+   */
   apply(compiler) {
     const pluginName = 'StripCodeWebpackPlugin';
 
@@ -57,6 +62,14 @@ export default class StripCodeWebpackPlugin {
     return EXCLUDE_MODES.includes(mode);
   }
 
+  /**
+   * @param {string} content
+   * @param {Object} options
+   * @param {Array<string|{start: string, end: string, prefix: string, suffix: string}>|undefined} [options.blocks]
+   * @return {string}
+   *
+   * @throws {Error} It throws an Error when options do not match the schema.
+   */
   strip(content, options) {
     if (this.shouldUseDefaults(options)) {
       options.blocks = [this.generateDefaultBlock()];
@@ -68,7 +81,7 @@ export default class StripCodeWebpackPlugin {
   /**
    * @param {Object} options
    * @param {Array<string|Object>|undefined} [options.blocks]
-   * @returns {boolean}
+   * @return {boolean}
    */
   shouldUseDefaults(options) {
     return isNotSet(options.blocks) || isEmptyArray(options.blocks);
@@ -76,7 +89,7 @@ export default class StripCodeWebpackPlugin {
 
   /**
    * @param {string} [name=DEFAULT_NAME]
-   * @return {{name:string, prefix: string, suffix: string}}
+   * @return {{start: string, end: string, prefix: string, suffix: string}}
    */
   generateDefaultBlock(name = DEFAULT_NAME) {
     return {
