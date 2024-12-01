@@ -160,4 +160,25 @@ describe('default test suite', () => {
 
     expect(output).toStrictEqual(expected);
   });
+
+  it('can replace a code block with a replacement', async () => {
+    const webpack = createWebpack(keeper, {
+      blocks: [
+        {
+          start: 'dev-start',
+          end: 'dev-end',
+          prefix: '<!--',
+          suffix: '-->',
+          replacement: '<!-- replaced -->',
+        },
+      ],
+    });
+
+    const input = 'visible <!-- dev-start --> will be removed <!-- dev-end -->';
+    const expected = 'visible <!-- replaced -->';
+
+    const output = (await webpack.compile(input)).getCompiledFixture();
+
+    expect(output).toStrictEqual(expected);
+  });
 });
