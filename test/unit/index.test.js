@@ -1,4 +1,4 @@
-import {describe, beforeAll, beforeEach, afterAll, expect, it} from 'vitest';
+import {afterAll, beforeAll, beforeEach, describe, expect, it} from 'vitest';
 import {createWebpack, createWebpackWithEnv} from '../helpers/compiler';
 import EntryKeeper from '../helpers/entry-keeper';
 
