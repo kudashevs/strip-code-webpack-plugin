@@ -45,7 +45,7 @@ function makeFoo(bar, baz) {
 ```
 
 The plugin strips blocks of code marked with two paired tags (a block). A block is represented by a string or an object
-with a name, prefix and suffix. Let's identify two different blocks and describe them in the configuration:
+with the properties described in "[Options](#options)" above. Let's identify two different blocks and describe them in the configuration:
 ```javascript
 // webpack.config.js 
 const StripCodePlugin = require('strip-code-webpack-plugin');
