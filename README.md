@@ -12,6 +12,7 @@ npm install --save-dev strip-code-webpack-plugin
 yarn add --dev strip-code-webpack-plugin
 ```
 
+
 ## Options
 
 `blocks` is an array of blocks' representations. Each element of this array describes a unique pair of tags with start, end,
@@ -23,6 +24,8 @@ prefix: '/*'                   # a string defines the beginning of a tag
 suffix: '*/'                   # a string defines the end of a tag
 replacement: 'optional'        # a string defines a substitution for a removed block
 ```
+
+The plugin supports zero config. When no options are provided, it uses default start, end, prefix and suffix values.
 
 
 ## Usage example
