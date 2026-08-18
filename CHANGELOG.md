@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0](https://github.com/kudashevs/strip-code-webpack-plugin/compare/v1.1.1...v2.0.0) - 2026-08-18
+
+- Drop support for Node 18, 20, 21, 23
+- Major bump of strip-code to 2.x
+- Major bump of eslint to 10.x
+- Major bump of memfs to 4.x
+- Major bump of vitest to 4.x
+- Minor bump of webpack to 5.105.x
+- Some improvements
+
 ## [1.1.0](https://github.com/kudashevs/strip-code-webpack-plugin/compare/v1.0.1...v1.1.0) - 2024-12-02
 
 - Bump minimum required `strip-code` version
