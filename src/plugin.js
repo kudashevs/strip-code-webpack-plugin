@@ -23,7 +23,7 @@ export default class StripCodeWebpackPlugin {
    */
   apply(compiler) {
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
-      if (this.shouldSkipProcessing(compiler.options.mode || process.env.NODE_ENV)) {
+      if (this.#shouldSkipProcessing(compiler.options.mode || process.env.NODE_ENV)) {
         return;
       }
 
@@ -37,7 +37,7 @@ export default class StripCodeWebpackPlugin {
         stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE,
       }, assets => {
         try {
-          this.processAssets(compilation, assets, RawSource);
+          this.#processAssets(compilation, assets, RawSource);
         } catch (err) {
           throw new Error(`Compilation failed with ${err.message}`);
         }
@@ -45,9 +45,9 @@ export default class StripCodeWebpackPlugin {
     });
   }
 
-  processAssets(compilation, assets, RawSource) {
+  #processAssets(compilation, assets, RawSource) {
     compilation.getAssets().forEach(({name, source}) => {
-      const modified = this.strip(source.source(), this.options);
+      const modified = this.#strip(source.source(), this.options);
 
       compilation.updateAsset(name, new RawSource(modified));
     });
@@ -57,7 +57,7 @@ export default class StripCodeWebpackPlugin {
    * @param {string} mode
    * @return {boolean}
    */
-  shouldSkipProcessing(mode) {
+  #shouldSkipProcessing(mode) {
     return EXCLUDE_MODES.includes(mode);
   }
 
@@ -69,9 +69,9 @@ export default class StripCodeWebpackPlugin {
    *
    * @throws {Error} It throws an Error when options do not match the schema.
    */
-  strip(content, options) {
-    if (this.shouldUseDefaults(options)) {
-      options.blocks = [this.generateDefaultBlock()];
+  #strip(content, options) {
+    if (this.#shouldUseDefaults(options)) {
+      options.blocks = [this.#generateDefaultBlock()];
     }
 
     return StripCode(content, options);
@@ -82,7 +82,7 @@ export default class StripCodeWebpackPlugin {
    * @param {Array<string|Object>|undefined} [options.blocks]
    * @return {boolean}
    */
-  shouldUseDefaults(options) {
+  #shouldUseDefaults(options) {
     return isNotSet(options.blocks) || isEmptyArray(options.blocks);
   }
 
@@ -90,7 +90,7 @@ export default class StripCodeWebpackPlugin {
    * @param {string} [name=DEFAULT_NAME]
    * @return {{start: string, end: string, prefix: string, suffix: string}}
    */
-  generateDefaultBlock(name = DEFAULT_NAME) {
+  #generateDefaultBlock(name = DEFAULT_NAME) {
     return {
       start: `${name}${DEFAULT_SEPARATOR}start`,
       end: `${name}${DEFAULT_SEPARATOR}end`,
