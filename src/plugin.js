@@ -37,7 +37,9 @@ export default class StripCodeWebpackPlugin {
         try {
           this.#processAssets(compilation, assets, RawSource);
         } catch (err) {
-          throw new Error(`Compilation failed with ${err.message}`);
+          const webpackErr = new Error(`[${PLUGIN_NAME}] Compilation failed with ${err.message}`);
+          webpackErr.stack = err.stack;
+          compilation.errors.push(webpackErr);
         }
       });
     });
