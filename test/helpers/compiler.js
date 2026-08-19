@@ -41,7 +41,10 @@ export function createWebpack(file, pluginOptions = {}, webpackOptions = {}) {
 
   return {
     async compile(input) {
-      file.write && file.write(input);
+      if (file.write) {
+        await file.write(input);
+      }
+
       const compileStats = await compile(input, compiler);
       return {
         getCompiledOutput() {
