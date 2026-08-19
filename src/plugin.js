@@ -5,6 +5,22 @@
 import StripCode from 'strip-code';
 import {mapDefaults} from "./mapper.js";
 
+/**
+ * @typedef {Object} BlockWithName
+ * @property {string} name - a name for the pair of tags.
+ * @property {string} [separator] - a separator between name and position.
+ * @property {string} [prefix] - a beginning of a tag.
+ * @property {string} [suffix] - an end of a tag.
+ * @property {string} [replacement] - a substitution text.
+ *
+ * @typedef {Object} BlockWithStartEnd
+ * @property {string} start - a unique name for the start tag.
+ * @property {string} end - a unique name for the end tag.
+ * @property {string} [prefix] - a beginning of a tag.
+ * @property {string} [suffix] - a end of a tag.
+ * @property {string} [replacement] - a substitution text.
+ */
+
 const PLUGIN_NAME = 'StripCodeWebpackPlugin';
 const EXCLUDE_MODES = ['development'];
 const FALLBACK_MODE = 'production';
@@ -15,7 +31,7 @@ export default class StripCodeWebpackPlugin {
   }
 
   /**
-   * @param {Object.<string, any>} compiler
+   * @param {import('webpack').Compiler} compiler
    *
    * @throws {Error} It throws an Error when options do not match the schema.
    */
@@ -74,7 +90,7 @@ export default class StripCodeWebpackPlugin {
   /**
    * @param {string} content
    * @param {Object} options
-   * @param {Array<string|{start: string, end: string, prefix: string, suffix: string}>|undefined} [options.blocks]
+   * @param {Array<string|BlockWithName|BlockWithStartEnd>|undefined} [options.blocks]
    * @return {string}
    *
    * @throws {Error} It throws an Error when options do not match the schema.
@@ -89,7 +105,7 @@ export default class StripCodeWebpackPlugin {
 
   /**
    * @param {Object} options
-   * @param {Array<string|Object>|undefined} [options.blocks]
+   * @param {Array<string|BlockWithName|BlockWithStartEnd>|undefined} [options.blocks]
    * @return {boolean}
    */
   #shouldUseDefaults(options) {
