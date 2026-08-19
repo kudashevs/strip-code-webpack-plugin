@@ -18,15 +18,29 @@ class Entry {
   constructor() {}
 
   async open(file = DEFAULT_ENTRY_FILE) {
-    const fullPath = path.join(__dirname, DEFAULT_ENTRY_PATH, file);
+    const directory = path.join(__dirname, DEFAULT_ENTRY_PATH);
+    const extension = path.extname(file);
+    const basename = path.basename(file, extension);
 
-    try {
-      this.fd = await fs.open(fullPath, 'w');
-    } catch (err) {
-      throw new Error(`Cannot create a file ${fullPath} because ${err.message}`);
+    for (let i = 0; i < 32; i++) {
+      const filename = i === 0
+        ? file
+        : `${basename}-${i}${extension}`;
+
+      const fullPath = path.join(directory, filename);
+
+      try {
+        this.fd = await fs.open(fullPath, 'wx');
+        this.file = fullPath;
+        return;
+      } catch (err) {
+        if (err.code !== 'EEXIST') {
+          throw new Error(
+            `Cannot create a file ${fullPath} because ${err.message}`
+          );
+        }
+      }
     }
-
-    this.file = fullPath;
   }
 
   async write(data) {
