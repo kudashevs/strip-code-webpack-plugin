@@ -28,8 +28,11 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Install webpack ${{ matrix.webpack-version }}
-        run: npm i webpack@${{ matrix.webpack-version }}
+        run: npm i webpack@${{ matrix.webpack-version }} --no-save
 
       - name: Run tests for webpack ${{ matrix.webpack-version }}
-        run: export NODE_OPTIONS=--openssl-legacy-provider && npm test
+        run: npm test
