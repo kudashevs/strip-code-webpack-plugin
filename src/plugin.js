@@ -2,7 +2,6 @@
 'use strict';
 
 import StripCode from 'strip-code';
-import {isEmptyArray, isNotSet} from './utils.js';
 
 const PLUGIN_NAME = 'StripCodeWebpackPlugin';
 const EXCLUDE_MODES = ['development'];
@@ -83,7 +82,23 @@ export default class StripCodeWebpackPlugin {
    * @return {boolean}
    */
   #shouldUseDefaults(options) {
-    return isNotSet(options.blocks) || isEmptyArray(options.blocks);
+    return this.#isNotSet(options.blocks) || this.#isEmptyArray(options.blocks);
+  }
+
+  /**
+   * @param {Array<*>|undefined} v
+   * @return {boolean}
+   */
+  #isNotSet(v) {
+    return v === undefined || v === null;
+  }
+
+  /**
+   * @param {Array<*>|undefined} v
+   * @return {boolean}
+   */
+  #isEmptyArray(v) {
+    return Array.isArray(v) && v.length === 0;
   }
 
   /**
