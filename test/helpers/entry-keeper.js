@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import {promises as fs} from 'fs';
 import path from 'path';
 import {fileURLToPath} from 'node:url';
 
@@ -51,7 +51,7 @@ class Entry {
 
   async exists() {
     try {
-      return await fs.access(File.file, fs.constants.OK);
+      return await fs.access(File.file, fs.constants.F_OK);
     } catch (err) {
       return false;
     }
