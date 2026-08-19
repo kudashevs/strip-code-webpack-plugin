@@ -7,6 +7,7 @@ import {mapDefaults} from "./mapper.js";
 
 const PLUGIN_NAME = 'StripCodeWebpackPlugin';
 const EXCLUDE_MODES = ['development'];
+const FALLBACK_MODE = 'production';
 
 export default class StripCodeWebpackPlugin {
   constructor(options = {}) {
@@ -20,7 +21,7 @@ export default class StripCodeWebpackPlugin {
    */
   apply(compiler) {
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
-      if (this.#shouldSkipProcessing(compiler.options.mode || process.env.NODE_ENV)) {
+      if (this.#shouldSkipProcessing(compiler.options?.mode || process.env.NODE_ENV || FALLBACK_MODE)) {
         return;
       }
 
