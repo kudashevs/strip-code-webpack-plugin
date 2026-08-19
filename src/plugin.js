@@ -96,11 +96,11 @@ export default class StripCodeWebpackPlugin {
    * @throws {Error} It throws an Error when options do not match the schema.
    */
   #strip(content, options) {
-    if (this.#shouldUseDefaults(options)) {
-      options.blocks = [mapDefaults()];
-    }
+    const populatedOptions = (this.#shouldUseDefaults(options))
+      ? {...options, blocks: [mapDefaults()]}
+      : options;
 
-    return StripCode(content, options);
+    return StripCode(content, populatedOptions);
   }
 
   /**
