@@ -88,7 +88,7 @@ describe('default test suite', () => {
     expect.assertions(1);
   });
 
-  it('can remove a code block marked with the colon (default block representation)', async () => {
+  it('can remove a code block marked with a hyphen (default block representation)', async () => {
     const webpack = createWebpack(keeper);
 
     const input = 'visible /* dev-start */ will be removed /* dev-end */';
@@ -99,7 +99,7 @@ describe('default test suite', () => {
     expect(output).toStrictEqual(expected);
   });
 
-  it('can use special characters in names', async () => {
+  it('can use special characters in pair names', async () => {
     const webpack = createWebpack(keeper, {
       blocks: [
         {
