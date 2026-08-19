@@ -46,10 +46,10 @@ export default class StripCodeWebpackPlugin {
       const {RawSource} = webpack.sources;
 
       // prettier-ignore
-      compilation.hooks.processAssets.tap({
+      compilation.hooks.processAssets.tapPromise({
         name: PLUGIN_NAME,
         stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE,
-      }, assets => {
+      }, async assets => {
         try {
           this.#processAssets(compilation, assets, RawSource);
         } catch (err) {
