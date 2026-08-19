@@ -82,7 +82,7 @@ export default class StripCodeWebpackPlugin {
    * @return {boolean}
    */
   #shouldUseDefaults(options) {
-    return this.#isNotSet(options.blocks) || this.#isEmptyArray(options.blocks);
+    return this.#isNotSet(options?.blocks) || this.#isEmptyArray(options?.blocks);
   }
 
   /**
