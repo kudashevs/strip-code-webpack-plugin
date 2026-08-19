@@ -45,9 +45,19 @@ export default class StripCodeWebpackPlugin {
     });
   }
 
+  /**
+   * @param {import('webpack').Compilation} compilation
+   * @param {import('webpack').Compilation['assets']} assets
+   * @param {typeof import('webpack').sources.RawSource} RawSource
+   */
   #processAssets(compilation, assets, RawSource) {
     compilation.getAssets().forEach(({name, source}) => {
-      const modified = this.#strip(source.source(), this.options);
+      const rawSource = source.source();
+      const content = (typeof rawSource === 'string')
+        ? rawSource
+        : rawSource.toString();
+
+      const modified = this.#strip(content, this.options);
 
       compilation.updateAsset(name, new RawSource(modified));
     });
