@@ -69,7 +69,7 @@ async function compile(input, compiler) {
       }
 
       if (stats.hasErrors()) {
-        return reject(new Error(stats.toJson().errors));
+        return reject(new Error(stats.toJson().errors.map(err => err.message).join('\n')));
       }
 
       if (compiler.close) {
