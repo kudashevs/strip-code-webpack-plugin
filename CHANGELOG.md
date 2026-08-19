@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1](https://github.com/kudashevs/strip-code-webpack-plugin/compare/v2.0.0...v2.0.1) - 2026-08-19
+
+- Fix mutation of options
+- Graceful error handling instead of raw exception
+- Fix process assets race condition
+- Fix compiler helper error handling
+- Fix compiler write race condition
+- Make entry keeper more flexible
+- Improve raw source handling reliability
+- Add class methods visibility
+- Extract defaults mapper
+- Inline util helpers
+- Update README.md
+- Some improvements
+
 ## [2.0.0](https://github.com/kudashevs/strip-code-webpack-plugin/compare/v1.1.1...v2.0.0) - 2026-08-18
 
 - Drop support for Node 18, 20, 21, 23
