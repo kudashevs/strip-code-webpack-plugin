@@ -2,13 +2,10 @@
 'use strict';
 
 import StripCode from 'strip-code';
+import {mapDefaults} from "./mapper.js";
 
 const PLUGIN_NAME = 'StripCodeWebpackPlugin';
 const EXCLUDE_MODES = ['development'];
-const DEFAULT_NAME = 'dev';
-const DEFAULT_SEPARATOR = '-';
-const DEFAULT_TAG_PREFIX = '/*';
-const DEFAULT_TAG_SUFFIX = '*/';
 
 export default class StripCodeWebpackPlugin {
   constructor(options = {}) {
@@ -70,7 +67,7 @@ export default class StripCodeWebpackPlugin {
    */
   #strip(content, options) {
     if (this.#shouldUseDefaults(options)) {
-      options.blocks = [this.#generateDefaultBlock()];
+      options.blocks = [mapDefaults()];
     }
 
     return StripCode(content, options);
@@ -99,18 +96,5 @@ export default class StripCodeWebpackPlugin {
    */
   #isEmptyArray(v) {
     return Array.isArray(v) && v.length === 0;
-  }
-
-  /**
-   * @param {string} [name=DEFAULT_NAME]
-   * @return {{start: string, end: string, prefix: string, suffix: string}}
-   */
-  #generateDefaultBlock(name = DEFAULT_NAME) {
-    return {
-      start: `${name}${DEFAULT_SEPARATOR}start`,
-      end: `${name}${DEFAULT_SEPARATOR}end`,
-      prefix: DEFAULT_TAG_PREFIX,
-      suffix: DEFAULT_TAG_SUFFIX
-    };
   }
 }
