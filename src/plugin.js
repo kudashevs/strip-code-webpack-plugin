@@ -4,6 +4,7 @@
 import StripCode from 'strip-code';
 import {isEmptyArray, isNotSet} from './utils.js';
 
+const PLUGIN_NAME = 'StripCodeWebpackPlugin';
 const EXCLUDE_MODES = ['development'];
 const DEFAULT_NAME = 'dev';
 const DEFAULT_SEPARATOR = '-';
@@ -21,9 +22,7 @@ export default class StripCodeWebpackPlugin {
    * @throws {Error} It throws an Error when options do not match the schema.
    */
   apply(compiler) {
-    const pluginName = 'StripCodeWebpackPlugin';
-
-    compiler.hooks.thisCompilation.tap(pluginName, compilation => {
+    compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
       if (this.shouldSkipProcessing(compiler.options.mode || process.env.NODE_ENV)) {
         return;
       }
@@ -34,7 +33,7 @@ export default class StripCodeWebpackPlugin {
 
       // prettier-ignore
       compilation.hooks.processAssets.tap({
-        name: pluginName,
+        name: PLUGIN_NAME,
         stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE,
       }, assets => {
         try {
