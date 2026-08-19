@@ -15,14 +15,18 @@ yarn add --dev strip-code-webpack-plugin
 
 ## Options
 
-`blocks` is an array of blocks' representations. Each element of this array describes a unique pair of tags with start, end,
-prefix, suffix and optional replacement. These values are represented by a string or an object with the following properties:
+`blocks` is an array of blocks' representations. Each element of this array describes a unique pair of tags. Pairs can
+be defined as a string or an object with different properties. For more information about `blocks` values and how to use
+them, please refer to the [strip-code plugin](https://github.com/kudashevs/strip-code#options).
+
 ```
-start: 'dev-start'             # a string defines a name for the start tag (unique)
-end: 'dev-end'                 # a string defines a name for the end tag (unique)
-prefix: '/*'                   # a string defines the beginning of a tag
-suffix: '*/'                   # a string defines the end of a tag
-replacement: 'optional'        # a string defines a substitution for a removed block
+name: 'name'            # string defines a name for a pair of tags - required if defined by a name
+separator: '-'          # string defines a separator between a name and a position - optional
+start: 'dev-start'      # string defines a name for the start tag (unique) - required if defined by start/end
+end: 'dev-end'          # string defines a name for the end tag (unique) - required if defined by start/end
+prefix: '/*'            # string defines the beginning of a tag (non-empty string) - optional
+suffix: '*/'            # string defines the end of a tag (can be an empty string) - optional
+replacement: 'any'      # string defines a substitution for a removed block - optional
 ```
 
 The plugin supports zero config. When no options are provided, it uses default start, end, prefix and suffix values.
@@ -30,25 +34,27 @@ The plugin supports zero config. When no options are provided, it uses default s
 
 ## Usage example
 
-For example, suppose the task is to strip some debug information and non-production code from this code sample.
+Imagine you want to strip debug information and non-production code from this sample (already marked by special paired comments).
 ```javascript
 function makeFoo(bar, baz) {
-    console.log('creating Foo'); 
-    
+    /* debug-start */ console.log('creating Foo'); /* debug-end */
+    // development_start
     if (bar instanceof Bar !== true) {
         throw new Error('makeFoo: bar param must be an instance of Bar');
     }
-    
+    // development_end
+    // devteam2:open
     if (baz instanceof Baz !== true) {
         throw new Error('makeFoo: baz param must be an instance of Baz');
     }
-    
+    // devteam2:close
+    // This code will remain
     return new Foo(bar, baz);
 }
 ```
 
-The plugin strips blocks of code marked with two paired tags (a block). A block is represented by a string or an object
-with the properties described in "[Options](#options)" above. Let's identify two different blocks and describe them in the configuration:
+The plugin strips blocks of code marked with a pair of tags (a block). A block is defined as a string or an object with
+the properties described in "[Options](#options)" above. Let's define different pairs of tags (blocks) in the configuration:
 ```javascript
 // webpack.config.js 
 const StripCodePlugin = require('strip-code-webpack-plugin');
@@ -60,8 +66,14 @@ module.exports = {
       blocks: [
         'debug',
         {
-          start: 'dev-start',
-          end: 'dev-end',
+          name: 'development',
+          separator: '_',
+          prefix: '//',
+          suffix: '',
+        },
+        {
+          start: 'devteam2:open',
+          end: 'devteam2:close',
           prefix: '//',
           suffix: '',
         },
@@ -71,26 +83,7 @@ module.exports = {
 }
 ```
 
-Once the blocks are described in the configuration, the unwanted areas of code can be marked in the code:
-```javascript
-function makeFoo(bar, baz) {
-    /* debug-start */ console.log('creating Foo'); /* debug-end */
-    // dev-start
-    if (bar instanceof Bar !== true) {
-        throw new Error('makeFoo: bar param must be an instance of Bar');
-    }
-    // dev-end
-    // dev-start
-    if (baz instanceof Baz !== true) {
-        throw new Error('makeFoo: baz param must be an instance of Baz');
-    }
-    // dev-end
-    // This code will remain
-    return new Foo(bar, baz);
-}
-```
-
-After the building process, the marked blocks will be completely removed.
+After the building process, the marked blocks will be completely removed from code.
 ```javascript
 function makeFoo(bar, baz) {
     // This code will remain
