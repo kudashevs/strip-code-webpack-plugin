@@ -8,16 +8,16 @@ describe('README example test suite', () => {
   const keeper = new EntryKeeper();
   const input = `function makeFoo(bar, baz) {
     /* debug-start */ console.log('creating Foo'); /* debug-end */
-    // dev-start
+    // development_start
     if (bar instanceof Bar !== true) {
         throw new Error('makeFoo: bar param must be an instance of Bar');
     }
-    // dev-end
-    // dev-start
+    // development_end
+    // devteam2:open
     if (baz instanceof Baz !== true) {
         throw new Error('makeFoo: baz param must be an instance of Baz');
     }
-    // dev-end
+    // devteam2:close
     // This code will remain
     return new Foo(bar, baz);
 }`;
@@ -45,8 +45,14 @@ describe('README example test suite', () => {
             blocks: [
               'debug',
               {
-                start: 'dev-start',
-                end: 'dev-end',
+                name: 'development',
+                separator: '_',
+                prefix: '//',
+                suffix: '',
+              },
+              {
+                start: 'devteam2:open',
+                end: 'devteam2:close',
                 prefix: '//',
                 suffix: '',
               },
