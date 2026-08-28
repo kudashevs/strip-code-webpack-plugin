@@ -13,7 +13,15 @@ yarn add --dev strip-code-webpack-plugin
 ```
 
 
+## Modes
+
+By default, the plugin strips blocks in all modes except the `development`. Use the `skipModes` option to disable stripping
+blocks in specific modes.
+
+
 ## Options
+
+`skipModes` is an array of modes where to disable marked blocks stripping.
 
 `blocks` is an array of blocks' representations. Each element of this array describes a unique pair of tags. Pairs can
 be defined as a string or an object with different properties. For more information about `blocks` values and how to use
