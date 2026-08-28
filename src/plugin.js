@@ -37,7 +37,7 @@ export default class StripCodeWebpackPlugin {
    */
   apply(compiler) {
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
-      if (this.#shouldSkipProcessing(compiler.options?.mode || process.env.NODE_ENV || FALLBACK_MODE)) {
+      if (this.#shouldSkipModes(this.options, compiler.options?.mode)) {
         return;
       }
 
@@ -62,6 +62,20 @@ export default class StripCodeWebpackPlugin {
   }
 
   /**
+   * @param {Object} options
+   * @param {Array<string>} [options.skipModes]
+   * @param {string|undefined} currentMode
+   * @returns {boolean}
+   */
+  #shouldSkipModes(options, currentMode) {
+    const eventualMode = currentMode ?? process.env.NODE_ENV ?? FALLBACK_MODE;
+    const modesFromOptions = options.skipModes ?? [];
+    const ignoreModes = [...EXCLUDE_MODES, ...modesFromOptions];
+
+    return ignoreModes.includes(eventualMode);
+  }
+
+  /**
    * @param {import('webpack').Compilation} compilation
    * @param {import('webpack').Compilation['assets']} assets
    * @param {typeof import('webpack').sources.RawSource} RawSource
@@ -77,14 +91,6 @@ export default class StripCodeWebpackPlugin {
 
       compilation.updateAsset(name, new RawSource(modified));
     });
-  }
-
-  /**
-   * @param {string} mode
-   * @return {boolean}
-   */
-  #shouldSkipProcessing(mode) {
-    return EXCLUDE_MODES.includes(mode);
   }
 
   /**

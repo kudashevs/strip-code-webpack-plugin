@@ -40,8 +40,8 @@ describe('default test suite', () => {
     expect(output).toStrictEqual(expected);
   });
 
-  it('can skip development environment set with a webpack option', async () => {
-    const webpack = createWebpack(keeper, {}, {mode: 'development'});
+  it('can skip production environment when an option is provided', async () => {
+    const webpack = createWebpack(keeper, {skipModes: ['production']}, {mode: 'production'});
 
     const input = '/* dev-start */ any /* dev-end */';
     const expected = '/* dev-start */ any /* dev-end */';
