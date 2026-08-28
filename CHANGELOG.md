@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0](https://github.com/kudashevs/strip-code-webpack-plugin/compare/v2.0.1...v2.1.0) - 2026-08-28
+
+- Add skipModes option
+- Update mode detection strategy
+- Update README.md
+- Some improvements
+
 ## [2.0.1](https://github.com/kudashevs/strip-code-webpack-plugin/compare/v2.0.0...v2.0.1) - 2026-08-19
 
 - Fix mutation of options
