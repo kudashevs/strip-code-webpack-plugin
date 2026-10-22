@@ -34,5 +34,12 @@ jobs:
       - name: Install webpack ${{ matrix.webpack-version }}
         run: npm i webpack@${{ matrix.webpack-version }} --no-save
 
+      - name: Upload npm logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: npm-debug-logs
+          path: /home/runner/.npm/_logs/*.log
+
       - name: Run tests for webpack ${{ matrix.webpack-version }}
         run: npm test
